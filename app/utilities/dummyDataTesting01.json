@@ -1,0 +1,239 @@
+{
+  "allocations": [
+    {
+      "name": "Rayan",
+      "id": "allocation_rayyan",
+      "blocks": [
+        {
+          "ratio": [1, 2],
+          "timeStart": "09:00",
+          "timeEnd": "11:00",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [
+              { "id": "asset_cameron", "name": "Cameron" },
+              { "id": "asset_riley", "name": "Riley" },
+              { "id": "location_amex", "name": "Amex" }
+            ],
+            "P-": []
+          }
+        },
+        {
+          "ratio": [1, 1],
+          "timeStart": "11:00",
+          "timeEnd": "12:15",
+          "matrix": {
+            "I+": [{ "id": "location_y6", "name": "Y6" }],
+            "I-": [{ "id": "allocation_nkhaius", "name": "NKhaius" }],
+            "P+": [
+              { "id": "asset_cameron", "name": "Cameron" },
+              { "id": "asset_riley", "name": "Riley" }
+            ],
+            "P-": [{ "id": "asset_walker", "name": "Walker" }]
+          }
+        },
+        {
+          "ratio": [1, 5],
+          "timeStart": "12:15",
+          "timeEnd": "13:00",
+          "matrix": {
+            "I+": [{ "id": "location_ict", "name": "ICT" }],
+            "I-": [],
+            "P+": [
+              { "id": "asset_cameron", "name": "Cameron" },
+              { "id": "asset_riley", "name": "Riley" }
+            ],
+            "P-": []
+          }
+        },
+        {
+          "ratio": [1, 1],
+          "timeStart": "13:00",
+          "timeEnd": "15:00",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [
+              { "id": "asset_cameron", "name": "Cameron" },
+              { "id": "asset_riley", "name": "Riley" },
+              { "id": "location_y6", "name": "Y6" }
+            ],
+            "P-": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rushani",
+      "id": "allocation_rushani",
+      "blocks": [
+        {
+          "ratio": [1, 2],
+          "timeStart": "09:00",
+          "timeEnd": "11:00",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [
+              { "id": "asset_obrien", "name": "O'Brien" },
+              { "id": "asset_riley", "name": "Riley" },
+              { "id": "location_amex", "name": "amex" }
+            ],
+            "P-": []
+          }
+        },
+        {
+          "ratio": [2, 1],
+          "timeStart": "11:00",
+          "timeEnd": "11:45",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [
+              { "id": "asset_obrien", "name": "O'Brien" },
+              { "id": "asset_riley", "name": "Riley" },
+              { "id": "location_y6", "name": "Y6" }
+            ],
+            "P-": []
+          }
+        },
+        {
+          "ratio": [1, 1],
+          "timeStart": "11:45",
+          "timeEnd": "12:15",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [
+              { "id": "asset_obrien", "name": "O'Brien" },
+              { "id": "asset_riley", "name": "Riley" },
+              { "id": "location_y6", "name": "Y6" }
+            ],
+            "P-": []
+          }
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "name": "Walker",
+      "id": "asset_walker",
+      "blocks": [
+        {
+          "timeStart": "09:00",
+          "timeEnd": "11:45",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [{ "id": "allocation_nkhaius", "name": "N'khaius" }],
+            "P-": []
+          }
+        },
+        {
+          "timeStart": "12:15",
+          "timeEnd": "15:00",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [{ "id": "allocation_nkhaius", "name": "N'khaius" }],
+            "P-": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cameron",
+      "id": "asset_cameron",
+      "blocks": [
+        {
+          "timeStart": "09:00",
+          "timeEnd": "15:00",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [{ "id": "allocation_rayyan", "name": "Rayan" }],
+            "P-": []
+          }
+        }
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "name": "ICT",
+      "id": "location_ICT",
+      "capacity": 10,
+      "blocks": [
+        {
+          "timeStart": "09:00",
+          "timeEnd": "11:45",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [],
+            "P-": []
+          }
+        },
+        {
+          "timeStart": "12:15",
+          "timeEnd": "15:00",
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [],
+            "P-": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hive",
+      "id": "location_hive",
+      "capacity": 10,
+      "blocks": [
+        {
+          "timeStart": "09:00",
+          "timeEnd": "12:00",
+          "capacity": 8,
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [],
+            "P-": []
+          }
+        },
+        {
+          "timeStart": "14:00",
+          "timeEnd": "15:00",
+          "capacity": 10,
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [],
+            "P-": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "Amex",
+      "id": "location_amex",
+      "capacity": 10,
+      "blocks": [
+        {
+          "timeStart": "09:00",
+          "timeEnd": "15:00",
+          "capacity": 10,
+          "matrix": {
+            "I+": [],
+            "I-": [],
+            "P+": [],
+            "P-": []
+          }
+        }
+      ]
+    }
+  ]
+}
