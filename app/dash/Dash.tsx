@@ -8,7 +8,7 @@ import { DateSlice } from "../lib/features/DateSlice";
 export default function Dash() {
   return (
     <Box>
-      <TimetableContainer stateKey={"allocations"} />
+      <TimetableContainer signature={"allocations"} />
     </Box>
   );
 }

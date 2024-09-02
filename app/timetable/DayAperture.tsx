@@ -4,19 +4,25 @@ import { Box, Tooltip } from "@mui/material";
 import React from "react";
 import moment from "moment";
 import { useGesture } from "@use-gesture/react";
-import { animated, useSpring } from "@react-spring/web";
+import { a, animated, useSpring } from "@react-spring/web";
 import useMeasure from "react-use-measure";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DateSlice } from "@/lib/features/dates/DateSlice";
 import DayTable from "./DayTable";
 import type { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
+import { setModal } from "@/lib/features/modal/modalSlice";
+import { AllocationInterface, KeyInterface } from "../utilities/interfaces";
 
 export default function DayAperture({
   disabled = false,
   children,
+  data,
+  signature,
 }: {
   disabled: boolean;
   children: JSX.Element;
+  data: AllocationInterface;
+  signature: KeyInterface;
 }) {
   const { timeSlots, startTime, endTime } = useSelector(
     (v: { dates: DateSlice }) => v.dates
@@ -25,6 +31,7 @@ export default function DayAperture({
   const [steppedTime, setSteppedTime] = React.useState<moment.Moment>(moment());
   const [dragging, setDragging] = React.useState<number | undefined>(undefined);
   const [hovered, setHovered] = React.useState<boolean>(false);
+  const [valid, setValid] = React.useState<boolean>(false);
 
   const [ref, bounds] = useMeasure();
 
@@ -34,7 +41,7 @@ export default function DayAperture({
   }));
   const [selectorSpring, selectorApi] = useSpring(() => ({
     x: 0,
-    y: 50,
+    // y: 50,
     width: 0,
   }));
 
@@ -77,7 +84,7 @@ export default function DayAperture({
     );
   }
 
-  const offset = (bounds.width / timeSlots.length) * -0.5;
+  const offset = (bounds.width / timeSlots.length) * -0.5 - 1;
 
   const handleMove = (e: { values: number[] }) => {
     let [mouseX, mouseY] = e.values;
@@ -92,6 +99,7 @@ export default function DayAperture({
     });
 
     if (dragging && !isNaN(dragging)) {
+      setValid(true);
       let start = selectorSpring.x.get();
 
       let localMousePos = clamp(
@@ -111,7 +119,10 @@ export default function DayAperture({
           x: localMousePos - 1,
           width: Math.floor(dragging - localMousePos),
         });
-      } else if (localMousePos === dragging) {
+      } else if (
+        Math.abs(dragging - offset - (mouseX - bounds.left)) < Math.abs(offset)
+      ) {
+        setValid(false);
         selectorApi.start({
           immediate: true,
           x: localMousePos,
@@ -121,7 +132,7 @@ export default function DayAperture({
         selectorApi.start({
           immediate: true,
           width: clamp(
-            extractStep(step - start),
+            extractStep(step - start + offset),
             0,
             bounds.width - dragging + offset
           ),
@@ -145,8 +156,34 @@ export default function DayAperture({
     });
   };
 
-  const handleDragEnd = (e: {}) => {
+  const dispatch = useDispatch();
+
+  const handleDragEnd = (e: { values: number[] }) => {
+    let [mouseX] = e.values;
     setDragging(undefined);
+    if (!valid) {
+      return;
+    }
+    const [startTime, endTime] = [
+      timeSlots[extractIndex(dragging ? dragging : 0)],
+      steppedTime,
+    ].sort((a, b) => a.diff(b));
+
+    dispatch(
+      setModal({
+        key: "AddBlock",
+        signature,
+        data: { ...data, startTime, endTime },
+        onClose: () => {
+          selectorApi.start({
+            immediate: true,
+            width: 0,
+            x: 0,
+            config: { tension: 210, friction: 20 },
+          });
+        },
+      })
+    );
   };
 
   const bindMove = useGesture(
@@ -197,7 +234,7 @@ export default function DayAperture({
           overflow: "hidden",
           backgroundColor: "red",
           borderRadius: "5px",
-          zIndex: "10",
+          zIndex: "100",
           height: "100%",
 
           ...selectorSpring,
@@ -225,6 +262,9 @@ export default function DayAperture({
       >
         <Tooltip
           slotProps={{
+            tooltip: {
+              sx: { ...(valid && { backgroundColor: "primary.main" }) },
+            },
             popper: {
               modifiers: [
                 {

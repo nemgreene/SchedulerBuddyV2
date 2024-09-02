@@ -3,6 +3,17 @@
     {
       "name": "Rayan",
       "id": "allocation_rayyan",
+      "matrix": {
+        "I+": [],
+        "I-": [],
+        "P+": [
+          { "id": "asset_cameron", "name": "Cameron" },
+          { "id": "asset_riley", "name": "Riley" },
+          { "id": "location_amex", "name": "Amex" }
+        ],
+        "P-": []
+      },
+      "ratio": [1, 2],
       "blocks": [
         {
           "ratio": [1, 2],

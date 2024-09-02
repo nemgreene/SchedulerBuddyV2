@@ -6,5 +6,5 @@ import TimetableContainer from "../timetable/TimetableContainer";
 import { Provider, useSelector } from "react-redux";
 
 export default function page() {
-  return <TimetableContainer stateKey={"assets"} />;
+  return <TimetableContainer signature={"assets"} />;
 }

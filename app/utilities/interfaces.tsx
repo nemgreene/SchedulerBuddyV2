@@ -23,7 +23,7 @@ export interface MartrixChildInterface {
 
 export type KeyInterface = "assets" | "allocations" | "locations" | string;
 export type DayCardVariant = "compact" | "default";
-export type ModalKeyInterface = "AddEntry" | "EditEntry";
+export type ModalKeyInterface = "AddEntry" | "EditEntry" | "AddBlock";
 
 export interface MatrixInterface {
   "I+": MartrixChildInterface[];
@@ -46,7 +46,10 @@ export interface AllocationBlockInterface {
 export interface AllocationInterface {
   name: string;
   id: string;
-  matrix?: MatrixInterface;
+  matrix: MatrixInterface;
+  ratio?: Array<number>;
+  capacity?: number;
+  headCount?: number;
   blocks: Array<AllocationBlockInterface>;
 }
 

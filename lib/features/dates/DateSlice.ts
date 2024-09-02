@@ -3,7 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 import * as moment from "moment";
 import { extendMoment } from "moment-range";
-import { DayInterface } from "@/app/utilities/interfaces";
+import {
+  AllocationBlockInterface,
+  AllocationInterface,
+  DayInterface,
+  KeyInterface,
+} from "@/app/utilities/interfaces";
 import data from "@/app/utilities/dummyDataTesting01.json";
 // import data from "../../utilities/dummyDataTesting01.json";
 // import data from "../utilities/dummyData.json";
@@ -15,7 +20,7 @@ export interface DateSlice {
   snapIncrement: number;
   timeSlots: Array<moment.Moment>;
   value: number;
-  data: DayInterface;
+  data: DayInterface | any;
 }
 
 const initialState: DateSlice = {
@@ -49,10 +54,30 @@ export const dateSlice = createSlice({
           .by("minutes", { step: 15 })
       );
     },
+    addBlock: (
+      state,
+      action: PayloadAction<{
+        data: AllocationInterface;
+        block: AllocationBlockInterface;
+      }>
+    ) => {},
+
+    addEntry: (
+      state,
+      action: PayloadAction<{
+        key: KeyInterface;
+        entry: AllocationInterface;
+      }>
+    ) => {
+      state.data[action.payload.key as keyof DayInterface] = [
+        ...state.data[action.payload.key as keyof DayInterface],
+        action.payload.entry,
+      ];
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateTimes } = dateSlice.actions;
+export const { updateTimes, addEntry, addBlock } = dateSlice.actions;
 
 export default dateSlice.reducer;

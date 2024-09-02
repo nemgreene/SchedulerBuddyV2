@@ -38,7 +38,12 @@ type variant = "add" | "edit";
 
 interface EntryFormProps {
   variant: variant;
-  formData?: AllocationInterface | undefined;
+  data?:
+    | (AllocationInterface & {
+        startTime?: moment.Moment;
+        endTime?: moment.Moment;
+      })
+    | undefined;
   signature?: KeyInterface;
 }
 
@@ -58,42 +63,36 @@ type Inputs = {
   showMatrix: boolean;
 };
 
-export default function EntryForm({
+export default function BlockForm({
   variant,
-  formData,
+  data,
   signature,
 }: EntryFormProps): JSX.Element {
   const defaultValues = {
     ratioA: 1,
     ratioB: 100,
-    showMatrix: Object.values(formData?.matrix || {}).flat(2).length > 0,
+    showMatrix: Object.values(data?.matrix || {}).flat(2).length > 0,
     showRatio:
-      formData?.ratio && JSON.stringify(formData?.ratio) !== "[1,100]"
-        ? true
-        : false,
-    showCapacity: formData?.capacity ? true : false,
-    showHeadCount: formData?.headCount ? true : false,
+      data?.ratio && JSON.stringify(data?.ratio) !== "[1,100]" ? true : false,
+    showCapacity: data?.capacity ? true : false,
+    showHeadCount: data?.headCount ? true : false,
     headCount: 1,
-    ...(formData?.name && { name: formData.name }),
-    ...(formData?.matrix &&
-      formData?.matrix["I+"] && { matrixA: formData.matrix["I+"] }),
-    ...(formData?.matrix &&
-      formData?.matrix["I-"] && { matrixB: formData.matrix["I-"] }),
-    ...(formData?.matrix &&
-      formData?.matrix["P+"] && { matrixC: formData.matrix["P+"] }),
-    ...(formData?.matrix &&
-      formData?.matrix["P-"] && { matrixD: formData.matrix["P-"] }),
-    ...(formData?.headCount && {
-      headCount: formData.headCount,
+    ...(data?.name && { name: data.name }),
+    ...(data?.matrix && data?.matrix["I+"] && { matrixA: data.matrix["I+"] }),
+    ...(data?.matrix && data?.matrix["I-"] && { matrixB: data.matrix["I-"] }),
+    ...(data?.matrix && data?.matrix["P+"] && { matrixC: data.matrix["P+"] }),
+    ...(data?.matrix && data?.matrix["P-"] && { matrixD: data.matrix["P-"] }),
+    ...(data?.headCount && {
+      headCount: data.headCount,
       showHeadCount: true,
     }),
-    ...(formData?.ratio && {
-      ratioA: formData.ratio[0],
-      ratioB: formData.ratio[1],
+    ...(data?.ratio && {
+      ratioA: data.ratio[0],
+      ratioB: data.ratio[1],
       showRatio: true,
     }),
-    ...(formData?.capacity && {
-      capacity: formData.capacity,
+    ...(data?.capacity && {
+      capacity: data.capacity,
       showCapacity: true,
     }),
   };
@@ -101,28 +100,15 @@ export default function EntryForm({
   const form = useForm<Inputs>({
     defaultValues,
   });
+  console.log(data?.startTime?.format("HH:mm"), data?.endTime?.format("HH:mm"));
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = form;
+  const { handleSubmit, reset, watch } = form;
 
   const dispatch = useDispatch();
 
   const { data: storeData } = useSelector((v: { dates: DateSlice }) => {
     return v.dates;
   });
-
-  const FormHeader = ({ children }: PropsWithChildren<{}>) => (
-    <div>
-      <Typography sx={{ pb: 1 }} variant="h5">
-        {children}
-      </Typography>
-    </div>
-  );
 
   const { showCapacity, showHeadCount, showMatrix } = watch();
 
@@ -187,28 +173,24 @@ export default function EntryForm({
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h4" sx={{ textTransform: "capitalize" }}>
-        {`${variant} ${signature}`}
+        {`${data?.name}: Add Time Block`}
       </Typography>
-      <br />
-      <InputLabel>
-        <Typography
-          variant="h5"
-          sx={{ textTransform: "capitalize", pt: 1, pb: 1 }}
-        >
-          {signature} Name*
-        </Typography>
-      </InputLabel>
-      <TextField
-        fullWidth
-        {...register("name", {
-          required: { value: true, message: "Must enter name" },
-        })}
-        error={errors.name ? true : false}
-        helperText={errors.name?.message || " "}
-      />
-
+      <Box
+        sx={{
+          pt: 2,
+          pb: 2,
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "nowrap",
+        }}
+      >
+        <Typography variant="h5">{data?.startTime?.format("HH:mm")}</Typography>
+        <Box sx={{ flex: 1 }}></Box>
+        <Typography variant="h5">{data?.endTime?.format("HH:mm")}</Typography>
+      </Box>
       {/* -----------------------------CheckBoxes----------------------------------- */}
-      <FormHeader>Advanced Data Input</FormHeader>
+      {/* <FormHeader>Advanced Data Input</FormHeader> */}
       <EntryCheckboxes form={form} signature={signature} />
       <br />
       {/* -----------------------------Ratio----------------------------------- */}

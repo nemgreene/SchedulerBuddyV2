@@ -7,6 +7,7 @@ import {
   AllocationBlockInterface,
   AllocationInterface,
   DayCardVariant,
+  KeyInterface,
   NiceNames,
   Phenome,
   PhenomeBlock,
@@ -20,11 +21,13 @@ export default function DayContainer({
   niceNames,
   disabled = false,
   variant = "default",
+  signature,
 }: {
-  data: AllocationInterface | { blocks: PhenomeBlock[]; name?: string };
+  data: AllocationInterface;
   niceNames: NiceNames[];
   disabled?: boolean;
   variant?: DayCardVariant;
+  signature: KeyInterface;
 }) {
   // const { startTime, endTime } = useSelector((v: { dates: DateSlice }) => {
   //   return v.dates;
@@ -48,7 +51,7 @@ export default function DayContainer({
         mb: 1,
       }}
     >
-      <DayAperture disabled={disabled}>
+      <DayAperture disabled={disabled} data={data} signature={signature}>
         <Box
           sx={{
             flexWrap: "nowrap",

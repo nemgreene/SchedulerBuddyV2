@@ -53,7 +53,6 @@ export default function ComputationDash() {
       return fitness;
     },
     // doesABeatBFunction: (a, b) => {
-    //   console.log(a, b);
     // },
     // population: () => [...intializePopulation(timelineData)],
     population,
@@ -63,14 +62,12 @@ export default function ComputationDash() {
   var geneticalgorithm = GeneticAlgorithmConstructor(config);
 
   const handleEvolve = () => {
-    console.log(geneticalgorithm.bestScore());
     const result = constructFiltered(geneticalgorithm.best(), filterKey);
     dispatch(
       setStorePhenome({
         phenome: result,
       })
     );
-    console.log(result);
   };
 
   const updateFilter = (key: KeyInterface) => {

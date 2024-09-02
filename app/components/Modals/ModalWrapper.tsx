@@ -19,7 +19,6 @@ export default function ModalWrapper({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -31,13 +30,20 @@ export default function ModalWrapper({
       <Modal
         open={modal.key ? true : false}
         onClose={() => {
-          dispatch(setModal({ key: undefined }));
+          if (modal.onClose) {
+            try {
+              modal.onClose();
+            } catch (error) {}
+          }
+          dispatch(
+            setModal({ key: undefined, signature: undefined, data: undefined })
+          );
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div>{modal.key && <ModalHandler modalKey={modal.key} />}</div>
+          <div>{modal.key && <ModalHandler modalKey={modal} />}</div>
         </Box>
       </Modal>
       {children}
