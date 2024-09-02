@@ -27,6 +27,7 @@ import {
   PhenomeSlice,
   setStorePhenome,
 } from "@/lib/features/phenome/phenomeSlice";
+import moment from "moment";
 
 export default function ComputationDash() {
   const dispatch = useAppDispatch();
@@ -66,6 +67,16 @@ export default function ComputationDash() {
   var geneticalgorithm = GeneticAlgorithmConstructor(config);
 
   const handleEvolve = () => {
+    const start = moment();
+    for (let i = 0; i < 100; i++) {
+      geneticalgorithm.evolve();
+    }
+    const end = moment();
+    console.log(
+      "Execution of 100 generations in: ",
+      end.diff(start, "seconds", true),
+      " seconds"
+    );
     const result = constructFiltered(geneticalgorithm.best(), filterKey);
     dispatch(
       setStorePhenome({
