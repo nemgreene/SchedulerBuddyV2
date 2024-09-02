@@ -389,12 +389,19 @@ export const assessPhenotypeRatio = (phenome: PhenomeBlock[]): number => {
       return () => {
         let assetCount = Array.from(
           new Set(
-            [...phenome].reduce((acc: PhenomeBlock[], curr: any) => {
+            [...phenome].reduce((acc: AllocationInterface[], curr: any) => {
               return curr.assets.name === v ? [...acc, curr.allocations] : acc;
             }, [])
           )
-        ).sort((a, b) => a?.ratio[1] - b?.ratio[1]);
-        const ret = assetCount[0]?.ratio[1] < assetCount.length ? 0.0 : 1.1;
+        ).sort((a: AllocationInterface, b: AllocationInterface) => {
+          return a.ratio && b.ratio ? a?.ratio[1] - b?.ratio[1] : 1;
+        });
+        const ret =
+          assetCount[0] &&
+          assetCount[0].ratio &&
+          assetCount[0]?.ratio[1] < assetCount.length
+            ? 0.0
+            : 1.1;
         return ret;
       };
     }),

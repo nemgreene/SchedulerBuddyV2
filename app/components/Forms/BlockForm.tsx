@@ -24,7 +24,7 @@ import FormControl, { useFormControl } from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormHelperText from "@mui/material/FormHelperText";
 import { Controller, Form, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addEntry, DateSlice } from "@/lib/features/dates/DateSlice";
 import { setModal } from "@/lib/features/modal/modalSlice";
 import MultiSelect from "@/app/components/Forms/MultiSelect";
@@ -100,13 +100,12 @@ export default function BlockForm({
   const form = useForm<Inputs>({
     defaultValues,
   });
-  console.log(data?.startTime?.format("HH:mm"), data?.endTime?.format("HH:mm"));
 
   const { handleSubmit, reset, watch } = form;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { data: storeData } = useSelector((v: { dates: DateSlice }) => {
+  const { data: storeData } = useAppSelector((v: { dates: DateSlice }) => {
     return v.dates;
   });
 
@@ -200,7 +199,7 @@ export default function BlockForm({
       {/* -----------------------------Head Count----------------------------------- */}
       {signature === "allocations" && <HeadCountForm form={form} />}
       {/* -----------------------------Matrix----------------------------------- */}
-      <MatrixForm form={form} matrix={storeData} />
+      <MatrixForm form={form} storeData={storeData} />
       <br />
       <Button fullWidth variant="outlined" sx={{ p: 3 }} type="submit">
         Submit

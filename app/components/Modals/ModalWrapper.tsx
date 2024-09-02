@@ -1,7 +1,7 @@
 "use client";
 import { ModalSlice, setModal } from "@/lib/features/modal/modalSlice";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Modal from "@mui/material/Modal";
 import { Box, Typography } from "@mui/material";
 import ModalHandler from "./ModalHandler";
@@ -9,11 +9,11 @@ import ModalHandler from "./ModalHandler";
 export default function ModalWrapper({
   children,
 }: React.PropsWithChildren<{}>) {
-  const modal = useSelector((v: { modal: ModalSlice }) => {
+  const modal = useAppSelector((v: { modal: ModalSlice }) => {
     return v.modal;
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const style = {
     position: "absolute" as "absolute",
     top: "50%",

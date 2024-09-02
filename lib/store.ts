@@ -1,7 +1,5 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import { counterSlice } from "./features/counter/counterSlice";
-import { quotesApiSlice } from "./features/quotes/quotesApiSlice";
 import { dateSlice } from "./features/dates/DateSlice";
 import { phenomeSlice } from "./features/phenome/phenomeSlice";
 import { modalSlice } from "./features/modal/modalSlice";

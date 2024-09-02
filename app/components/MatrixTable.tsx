@@ -20,10 +20,10 @@ export default function MatrixTable({ matrix }: { matrix: MatrixInterface }) {
           <TableRow>
             {Object.keys(matrix).map(
               (v: string, i: number) =>
-                matrix[v].length > 0 && (
+                matrix[v as keyof MatrixInterface].length > 0 && (
                   <Tooltip
                     key={i}
-                    title={matrixSymbols[v]}
+                    title={matrixSymbols[v as keyof MatrixInterface]}
                     placement="top"
                     arrow
                     slotProps={{
@@ -49,20 +49,24 @@ export default function MatrixTable({ matrix }: { matrix: MatrixInterface }) {
         </TableHead>
         <TableBody>
           {Object.keys(matrix)
-            .sort((p: string, n: string) => matrix[p].length - matrix[p].length)
+            .sort(
+              (p: string, n: string) =>
+                matrix[p as keyof MatrixInterface].length -
+                matrix[p as keyof MatrixInterface].length
+            )
             .map((v, index) => {
               return (
                 <TableRow key={index}>
                   {Object.keys(matrix).map(
                     (v, i) =>
-                      matrix[v][index]?.name && (
+                      matrix[v as keyof MatrixInterface][index]?.name && (
                         <TableCell
                           key={i}
                           align="center"
                           sx={{ border: 0, p: 0.1 }}
                         >
                           <Typography sx={{ fontSize: ".9rem" }}>
-                            {matrix[v][index]?.name}
+                            {matrix[v as keyof MatrixInterface][index]?.name}
                           </Typography>
                         </TableCell>
                       )

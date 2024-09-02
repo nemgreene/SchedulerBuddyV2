@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { DateSlice } from "@/lib/features/dates/DateSlice";
 import {
   Phenome,
@@ -22,15 +23,18 @@ import {
 import ComputationDisplayTable from "./ComputationDisplayTable";
 import { Button } from "@mui/material";
 // import { setStorePhenome } from "../lib/features/PhenomeSlice";
-import { setStorePhenome } from "@/lib/features/phenome/phenomeSlice";
+import {
+  PhenomeSlice,
+  setStorePhenome,
+} from "@/lib/features/phenome/phenomeSlice";
 
 export default function ComputationDash() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     dates: { data, snapIncrement, timeSlots },
     phenome: { phenome },
-  } = useSelector((v: { dates: DateSlice; phenome: Phenome }) => {
+  } = useAppSelector((v: { dates: DateSlice; phenome: PhenomeSlice }) => {
     return { phenome: v.phenome, dates: v.dates };
   }, shallowEqual);
 

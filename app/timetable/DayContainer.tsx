@@ -14,7 +14,6 @@ import {
 } from "../utilities/interfaces";
 import DayAperture from "./DayAperture";
 import DayCard from "./DayCard";
-import { useSelector } from "react-redux";
 
 export default function DayContainer({
   data,
@@ -29,7 +28,7 @@ export default function DayContainer({
   variant?: DayCardVariant;
   signature: KeyInterface;
 }) {
-  // const { startTime, endTime } = useSelector((v: { dates: DateSlice }) => {
+  // const { startTime, endTime } = useAppSelector((v: { dates: DateSlice }) => {
   //   return v.dates;
   // });
 

@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { Box, Button, Grid } from "@mui/material";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { Provider } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 import {
   AllocationInterface,
@@ -20,7 +21,7 @@ export default function TimetableContainer({
 }: {
   signature: string;
 }) {
-  const { data } = useSelector((v: { dates: DateSlice }) => {
+  const { data } = useAppSelector((v: { dates: DateSlice }) => {
     return v.dates;
   });
 
@@ -30,7 +31,7 @@ export default function TimetableContainer({
     ...data.locations,
   ].map((v: { name: string; id: string }) => ({ name: v.name, id: v.id }));
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <Grid container sx={{ width: "100vw", p: 2, pt: 1, pb: 1 }}>
       <Grid item xs={12} container>

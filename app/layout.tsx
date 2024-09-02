@@ -1,10 +1,7 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
 import { StoreProvider } from "./StoreProvider";
 import Nav from "./components/Nav";
 import ThemeRegistry from "./utilities/ThemeRegistry";
-import Modal from "@mui/material/Modal";
-import { useSelector } from "react-redux";
 import ModalWrapper from "./components/Modals/ModalWrapper";
 
 interface Props {

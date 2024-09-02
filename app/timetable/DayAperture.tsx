@@ -6,7 +6,8 @@ import moment from "moment";
 import { useGesture } from "@use-gesture/react";
 import { a, animated, useSpring } from "@react-spring/web";
 import useMeasure from "react-use-measure";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/lib/hooks";
 import { DateSlice } from "@/lib/features/dates/DateSlice";
 import DayTable from "./DayTable";
 import type { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
@@ -21,7 +22,7 @@ export default function DayAperture({
 }: {
   disabled: boolean;
   children: JSX.Element;
-  data: AllocationInterface;
+  data?: AllocationInterface | undefined;
   signature: KeyInterface;
 }) {
   const { timeSlots, startTime, endTime } = useSelector(
@@ -156,7 +157,7 @@ export default function DayAperture({
     });
   };
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleDragEnd = (e: { values: number[] }) => {
     let [mouseX] = e.values;
@@ -173,7 +174,7 @@ export default function DayAperture({
       setModal({
         key: "AddBlock",
         signature,
-        data: { ...data, startTime, endTime },
+        data: data ? { ...data, startTime, endTime } : undefined,
         onClose: () => {
           selectorApi.start({
             immediate: true,

@@ -18,31 +18,24 @@ import {
   AllocationInterface,
   MatrixInterface,
   MartrixChildInterface,
+  DayInterface,
 } from "../../utilities/interfaces";
-import FormControl, { useFormControl } from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import FormHelperText from "@mui/material/FormHelperText";
-import { Controller, Form, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { addEntry, DateSlice } from "@/lib/features/dates/DateSlice";
-import { setModal } from "@/lib/features/modal/modalSlice";
 import MultiSelect from "@/app/components/Forms/MultiSelect";
 
 export default function MatrixForm({
-  matrix = [],
+  storeData,
   form,
 }: {
-  matrix: AllocationInterface[];
+  storeData: DayInterface;
   form: any;
 }) {
   const { resetField, control, watch, setValue } = form;
-
   const { matrixA, matrixB, matrixC, matrixD, showMatrix } = watch();
 
-  const flatData = Object.keys(matrix).reduce(
+  const flatData = Object.keys(storeData).reduce(
     (acc: AllocationInterface[], curr: string) => [
       ...acc,
-      ...matrix[curr as keyof MatrixInterface],
+      ...storeData[curr as keyof DayInterface],
     ],
     []
   );

@@ -1,8 +1,8 @@
 import { KeyInterface, ModalKeyInterface } from "@/app/utilities/interfaces";
 import { ModalSlice, setModal } from "@/lib/features/modal/modalSlice";
 import React from "react";
-import { useDispatch } from "react-redux";
 import EntryForm from "../Forms/EntryForm";
+import { useAppDispatch } from "@/lib/hooks";
 import { Box } from "@mui/material";
 import BlockForm from "../Forms/BlockForm";
 
@@ -30,7 +30,7 @@ export default function ModalHandler({ modalKey }: { modalKey: ModalSlice }) {
       />
     ),
   };
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const selectModal = (key: ModalKeyInterface | undefined) => {
     const ret: React.ReactElement | undefined =

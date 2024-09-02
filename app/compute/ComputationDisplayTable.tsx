@@ -15,8 +15,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { constructFiltered } from "./utilities";
-import { useDispatch } from "react-redux";
 import DayAperture from "../timetable/DayAperture";
 import DayCard from "../timetable/DayCard";
 
@@ -42,7 +40,7 @@ export default function ComputationDisplayTable({
                 {name}
               </Grid>
               <Grid item xs={12}>
-                <DayAperture key={i} disabled={true}>
+                <DayAperture key={i} disabled={true} signature={filterKey}>
                   <React.Fragment>
                     {keys.map((keyName, index) => {
                       return Array.from(

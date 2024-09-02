@@ -1,17 +1,14 @@
 import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState, memo } from "react";
-import { useSelector } from "react-redux";
+import React, { memo } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { DateSlice } from "@/lib/features/dates/DateSlice";
 import {
   AllocationBlockInterface,
   DayCardVariant,
-  MartrixChildInterface,
   NiceNames,
   PhenomeBlock,
 } from "../utilities/interfaces";
-import { green } from "@mui/material/colors";
-import { extractNameFromId } from "../utilities/utilities";
 import MatrixTable from "../components/MatrixTable";
 
 interface DayCardProps {
@@ -28,7 +25,7 @@ export default memo(function DayCard({
   yOffset = 0,
   height = 0,
 }: DayCardProps) {
-  const { startTime, endTime } = useSelector((v: { dates: DateSlice }) => {
+  const { startTime, endTime } = useAppSelector((v: { dates: DateSlice }) => {
     return v.dates;
   });
 
